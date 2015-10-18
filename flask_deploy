@@ -1,0 +1,62 @@
+	1  mkdir ~/.pip
+    2  vim ~/.pip/pip.conf
+    3  sudo apt-get update && sudo apt-get upgrade
+    4  sudo apt-get install python3-dev libmysqlclient-dev python3-pip git supervisor nginx mysql-server
+    5  apt-apt install  mysql-server
+    6  apt-get install  mysql-server
+    7  git clone https://github.com/yanweicode/blog
+    8  ls
+    9  cd blog/
+   10  vim .env.txt
+   11  pwd
+   12  vim supervisor.conf
+   13  sudo pip3 install -U pip
+   14  sudo pip3 install virtualenv
+   15  virtualenv-3.4 --no-site-packages -p `which python3` venv
+   16  source venv/bin/activate
+   17  pip3 install -r requirements.txt
+   18  myaql
+   19  mysql -u root
+   20  mysql -u root -p
+   		create database blog;
+   21  ./manage.py deploy
+   22  ./manage.py shell 
+       	User.generate_fake(2000); 
+		Post.generate_fake(2000);
+   23  gunicorn -w4 -b0.0.0.0:9999 manage:app
+   24  mv supervisor.conf /etc/supervisor/conf.d/blog.conf
+   25  sudo service supervisor restart
+   26  ps aux | grep supervisord
+   27  ps aux | grep gunicorn
+   28  cd /etc/nginx/sites-available
+   29  sudo cp default blog
+   30  ls
+   31  sudo vim blog 
+   		server {
+
+    		listen 80;
+    		root /<你的工作目录>/blog;
+    		server_name <你的域名>;
+    		location / {
+            		proxy_pass http://127.0.0.1:9999;
+    		}
+    		location /static {
+            	alias /<你的工作目录>/blog/app/static/;
+    		}
+		}
+   32  cd ../sites-enabled
+   33  sudo rm default
+   34  sudo ln -s ../sites-available/blog 
+   35  sudo service nginx restart
+
+http://duanguanhua.cn/auth/register
+
+scp LICENSE root@115.28.141.241:/root/blog
+vim .env.txt
+
+MAIL_SERVER=<邮件服务器地址>
+MAIL_PORT=<邮件服务器端口号>
+MAIL_USERNAME=<邮箱地址>
+MAIL_PASSWORD=<邮箱密码>
+DATABASE_URL=mysql://root:duanguanhua@localhost/blog
+
